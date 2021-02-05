@@ -1,0 +1,5 @@
+.DS_Sttore
+dbdata/*
+src/composer*
+.vscode
+docker-compose.yml
