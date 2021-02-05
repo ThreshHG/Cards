@@ -72,6 +72,17 @@ class m210205_083253_create_junction_table_for_users_and_users_tables extends Mi
             '{{%users_users}}'
         );
 
+        $this->dropForeignKey(
+            '{{%fk-users_users-users2_id}}',
+            '{{%users_users}}'
+        );
+
+        // drops index for column `users_id`
+        $this->dropIndex(
+            '{{%idx-users_users-users2_id}}',
+            '{{%users_users}}'
+        );
+
         $this->dropTable('{{%users_users}}');
     }
 }
