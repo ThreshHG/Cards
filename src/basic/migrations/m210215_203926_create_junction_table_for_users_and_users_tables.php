@@ -8,7 +8,7 @@ use yii\db\Migration;
  *
  * - `{{%users}}`
  */
-class m210205_083253_create_junction_table_for_users_and_users_tables extends Migration
+class m210215_203926_create_junction_table_for_users_and_users_tables extends Migration
 {
     /**
      * {@inheritdoc}
@@ -16,10 +16,11 @@ class m210205_083253_create_junction_table_for_users_and_users_tables extends Mi
     public function safeUp()
     {
         $this->createTable('{{%users_users}}', [
-            'users_id' => $this->integer()->notNull(),
-            'users2_id' => $this->integer()->notNull(),
+            'users_id' => $this->integer(),
+            'users2_id' => $this->integer(),
             'usr1_blocked_usr2' => $this->boolean(),
             'usr2_blocked_usr1' => $this->boolean(),
+            //'PRIMARY KEY(users_id, users2_id)',
         ]);
 
         // creates index for column `users_id`

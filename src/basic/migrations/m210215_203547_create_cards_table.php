@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%cards}}`.
  */
-class m210205_080359_create_cards_table extends Migration
+class m210215_203547_create_cards_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -14,7 +14,7 @@ class m210205_080359_create_cards_table extends Migration
     {
         $this->createTable('{{%cards}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string()->notNull(),
+            'name' => $this->string()->notNull()->unique(),
             'cost' => $this->integer(),
             'health' => $this->integer(),
             'atk' => $this->integer(),

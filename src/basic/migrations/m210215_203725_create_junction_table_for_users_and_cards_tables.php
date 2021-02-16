@@ -9,7 +9,7 @@ use yii\db\Migration;
  * - `{{%users}}`
  * - `{{%cards}}`
  */
-class m210205_081749_create_junction_table_for_users_and_cards_tables extends Migration
+class m210215_203725_create_junction_table_for_users_and_cards_tables extends Migration
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class m210205_081749_create_junction_table_for_users_and_cards_tables extends Mi
     public function safeUp()
     {
         $this->createTable('{{%users_cards}}', [
-            'users_id' => $this->integer()->notNull(),
-            'cards_id' => $this->integer()->notNull(),
+            'users_id' => $this->integer(),
+            'cards_id' => $this->integer(),
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             //'PRIMARY KEY(users_id, cards_id)',
