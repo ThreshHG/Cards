@@ -74,11 +74,6 @@ class Cards extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UsersCards::className(), ['cards_id' => 'id']);
     }
-    //custom function, si no anda borrar
-    public function getUsers()
-    {
-        return $this->hasMany(UsersCards::className(), ['cards_id' => 'id'])->viaTable('users_cards',['users' => 'id']);
-    }
 
     /**
      * {@inheritdoc}

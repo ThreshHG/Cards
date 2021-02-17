@@ -9,7 +9,7 @@ use yii\db\Migration;
  * - `{{%users}}`
  * - `{{%cards}}`
  */
-class m210215_203725_create_junction_table_for_users_and_cards_tables extends Migration
+class m210217_171955_create_junction_table_for_users_and_cards_tables extends Migration
 {
     /**
      * {@inheritdoc}

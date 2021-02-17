@@ -64,7 +64,7 @@ class UsersCards extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|UsersQuery
      */
     public function getUsers()
     {

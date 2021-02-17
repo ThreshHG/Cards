@@ -7,7 +7,7 @@ use yii\rest\ActiveController;
 /**
  * Default controller for the `apiv1` module
  */
-class CardsController extends ActiveController
+class UsersController extends ActiveController
 {
-    public $modelClass = 'app\models\Cards';
+    public $modelClass = 'app\models\Users';
 }

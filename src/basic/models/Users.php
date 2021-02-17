@@ -10,6 +10,8 @@ use Yii;
  * @property int $id
  * @property string $username
  * @property string $pass
+ * @property string $auth_key
+ * @property string $access_token
  *
  * @property UsersCards[] $usersCards
  * @property UsersUsers[] $usersUsers
@@ -31,9 +33,11 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'pass'], 'required'],
-            [['username', 'pass'], 'string', 'max' => 255],
+            [['username', 'pass', 'auth_key', 'access_token'], 'required'],
+            [['username', 'pass', 'auth_key', 'access_token'], 'string', 'max' => 255],
             [['username'], 'unique'],
+            [['auth_key'], 'unique'],
+            [['access_token'], 'unique'],
         ];
     }
 
@@ -46,28 +50,25 @@ class Users extends \yii\db\ActiveRecord
             'id' => 'ID',
             'username' => 'Username',
             'pass' => 'Pass',
+            'auth_key' => 'Auth Key',
+            'access_token' => 'Access Token',
         ];
     }
 
     /**
      * Gets query for [[UsersCards]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|UsersCardsQuery
      */
     public function getUsersCards()
     {
         return $this->hasMany(UsersCards::className(), ['users_id' => 'id']);
     }
-    //custom, si no anda borrar
-    public function getCards()
-    {
-        return $this->hasMany(UsersCards::className(), ['users_id' => 'id'])->viaTable('users_cards',['cards' => 'id']);
-    }
 
     /**
      * Gets query for [[UsersUsers]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|UsersUsersQuery
      */
     public function getUsersUsers()
     {
@@ -77,10 +78,19 @@ class Users extends \yii\db\ActiveRecord
     /**
      * Gets query for [[UsersUsers0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|UsersUsersQuery
      */
     public function getUsersUsers0()
     {
         return $this->hasMany(UsersUsers::className(), ['users_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return UsersQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UsersQuery(get_called_class());
     }
 }
