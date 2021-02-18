@@ -17,7 +17,7 @@ use Yii;
  * @property UsersUsers[] $usersUsers
  * @property UsersUsers[] $usersUsers0
  */
-class Users extends \yii\db\ActiveRecord
+class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -33,7 +33,7 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'pass', 'auth_key', 'access_token'], 'required'],
+            [['username', 'pass'], 'required'],
             [['username', 'pass', 'auth_key', 'access_token'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['auth_key'], 'unique'],
@@ -64,7 +64,11 @@ class Users extends \yii\db\ActiveRecord
     {
         return $this->hasMany(UsersCards::className(), ['users_id' => 'id']);
     }
-
+    
+    public function getCards()
+    {
+        return $this->hasMany(Cards::className(), ['id' => 'users_id'])->viaTable('{{%users_cards}}',['cards_id' => 'id']);
+    }
     /**
      * Gets query for [[UsersUsers]].
      *
@@ -85,12 +89,45 @@ class Users extends \yii\db\ActiveRecord
         return $this->hasMany(UsersUsers::className(), ['users_id' => 'id']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return UsersQuery the active query used by this AR class.
-     */
+        //
     public static function find()
     {
         return new UsersQuery(get_called_class());
+    }
+
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return self::findOne(['access_token'=>$token]);
+    }
+
+    public static function findByUsername($username)
+    {
+        return self::findOne(['username'=>$username]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
+
+    public function validatePassword($password)
+    {
+        return password_verify($password, $this->pass);
     }
 }

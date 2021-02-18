@@ -9,5 +9,5 @@ use yii\rest\ActiveController;
  */
 class UserscardsController extends ActiveController
 {
-    public $modelClass = 'app\models\UsersCards';
+    public $modelClass = 'app\modules\apiv1\models\UsersCards';
 }

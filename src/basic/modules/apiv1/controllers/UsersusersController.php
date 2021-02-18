@@ -9,5 +9,5 @@ use yii\rest\ActiveController;
  */
 class UsersusersController extends ActiveController
 {
-    public $modelClass = 'app\models\UsersUsers';
+    public $modelClass = 'app\modules\apiv1\models\UsersUsers';
 }

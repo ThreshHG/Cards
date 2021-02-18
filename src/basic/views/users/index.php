@@ -28,9 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'pass',
-            'auth_key',
-            'access_token',
+            //'pass',
+            //'auth_key',
+            //'access_token',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
