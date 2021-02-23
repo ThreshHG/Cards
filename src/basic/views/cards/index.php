@@ -34,9 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'description',
             //'type',
             //'faccion',
-            //'bg_color',
-            //'border_color',
-            //'image',
+            //'template_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

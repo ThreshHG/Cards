@@ -26,11 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'faccion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'bg_color')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'border_color')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image')->textInput() ?>
+    <?= $form->field($model, 'template_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\UsersCards;
+use app\models\Template;
 
 /**
- * UsersCardsSearch represents the model behind the search form of `app\models\UsersCards`.
+ * TemplateSearch represents the model behind the search form of `app\models\Template`.
  */
-class UsersCardsSearch extends UsersCards
+class TemplateSearch extends Template
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class UsersCardsSearch extends UsersCards
     public function rules()
     {
         return [
-            [['id', 'users_id', 'cards_id'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'name_id', 'cost_id', 'health_id', 'atk_id', 'description', 'type', 'faccion'], 'integer'],
         ];
     }
 
@@ -40,7 +39,7 @@ class UsersCardsSearch extends UsersCards
      */
     public function search($params)
     {
-        $query = UsersCards::find();
+        $query = Template::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +58,14 @@ class UsersCardsSearch extends UsersCards
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'users_id' => $this->users_id,
-            'cards_id' => $this->cards_id,
+            'name_id' => $this->name_id,
+            'cost_id' => $this->cost_id,
+            'health_id' => $this->health_id,
+            'atk_id' => $this->atk_id,
+            'description' => $this->description,
+            'type' => $this->type,
+            'faccion' => $this->faccion,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

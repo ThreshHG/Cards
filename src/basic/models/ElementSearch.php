@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Cards;
+use app\models\Element;
 
 /**
- * CardsSearch represents the model behind the search form of `app\models\Cards`.
+ * ElementSearch represents the model behind the search form of `app\models\Element`.
  */
-class CardsSearch extends Cards
+class ElementSearch extends Element
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class CardsSearch extends Cards
     public function rules()
     {
         return [
-            [['id', 'cost', 'health', 'atk', 'template_id'], 'integer'],
-            [['name', 'description', 'type', 'faccion'], 'safe'],
+            [['id', 'axisx1', 'axisy1', 'axisx2', 'axisy2', 'axisz', 'borderwidth', 'gridrows', 'gridcolumns', 'radiolt', 'radiort', 'radiolb', 'radiorb'], 'integer'],
+            [['name', 'bordercolor', 'innercolor', 'image'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class CardsSearch extends Cards
      */
     public function search($params)
     {
-        $query = Cards::find();
+        $query = Element::find();
 
         // add conditions that should always apply here
 
@@ -59,16 +59,24 @@ class CardsSearch extends Cards
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'cost' => $this->cost,
-            'health' => $this->health,
-            'atk' => $this->atk,
-            'template_id' => $this->template_id,
+            'axisx1' => $this->axisx1,
+            'axisy1' => $this->axisy1,
+            'axisx2' => $this->axisx2,
+            'axisy2' => $this->axisy2,
+            'axisz' => $this->axisz,
+            'borderwidth' => $this->borderwidth,
+            'gridrows' => $this->gridrows,
+            'gridcolumns' => $this->gridcolumns,
+            'radiolt' => $this->radiolt,
+            'radiort' => $this->radiort,
+            'radiolb' => $this->radiolb,
+            'radiorb' => $this->radiorb,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'faccion', $this->faccion]);
+            ->andFilterWhere(['like', 'bordercolor', $this->bordercolor])
+            ->andFilterWhere(['like', 'innercolor', $this->innercolor])
+            ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;
     }

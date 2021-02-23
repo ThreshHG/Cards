@@ -15,10 +15,9 @@ use Yii;
  * @property string|null $description
  * @property string|null $type
  * @property string|null $faccion
- * @property string|null $bg_color
- * @property string|null $border_color
- * @property resource|null $image
+ * @property int|null $template_id
  *
+ * @property Template $template
  * @property UsersCards[] $usersCards
  */
 class Cards extends \yii\db\ActiveRecord
@@ -38,10 +37,9 @@ class Cards extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['cost', 'health', 'atk'], 'integer'],
-            [['image'], 'string'],
-            [['name', 'description', 'type', 'faccion', 'bg_color', 'border_color'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['cost', 'health', 'atk', 'template_id'], 'integer'],
+            [['name', 'description', 'type', 'faccion'], 'string', 'max' => 255],
+            [['template_id'], 'exist', 'skipOnError' => true, 'targetClass' => Template::className(), 'targetAttribute' => ['template_id' => 'id']],
         ];
     }
 
@@ -59,10 +57,18 @@ class Cards extends \yii\db\ActiveRecord
             'description' => 'Description',
             'type' => 'Type',
             'faccion' => 'Faccion',
-            'bg_color' => 'Bg Color',
-            'border_color' => 'Border Color',
-            'image' => 'Image',
+            'template_id' => 'Template ID',
         ];
+    }
+
+    /**
+     * Gets query for [[Template]].
+     *
+     * @return \yii\db\ActiveQuery|TemplateQuery
+     */
+    public function getTemplate()
+    {
+        return $this->hasOne(Template::className(), ['id' => 'template_id']);
     }
 
     /**

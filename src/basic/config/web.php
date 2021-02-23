@@ -54,7 +54,7 @@ $config = [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'pluralize' => 'false',
-                    'controller' => ['apiv1/cards','apiv1/userscards','apiv1/users','apiv1/usersusers'],
+                    'controller' => ['apiv1/template','apiv1/element','apiv1/cards','apiv1/userscards','apiv1/users','apiv1/usersusers'],
                 ]
                 
             ],

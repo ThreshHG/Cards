@@ -7,7 +7,7 @@ use yii\rest\ActiveController;
 /**
  * Default controller for the `apiv1` module
  */
-class CardsController extends ActiveController
+class ElementController extends ActiveController
 {
-    public $modelClass = 'app\modules\apiv1\models\Cards';
+    public $modelClass = 'app\modules\apiv1\models\Element';
 }
