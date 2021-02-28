@@ -6,7 +6,6 @@ use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = 'Vue';
-$this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['position'=>View::POS_HEAD]);
 //$this->registerJsFile("https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js",['position'=>View::POS_HEAD]);
@@ -43,11 +42,7 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
             </div>
             <div id="elembody">
                 <div v-if="active!='base'">
-                    <span>include</span>
-                    <label for="yes">yes</label>
-                    <input type="radio" name="display" id="yes" v-on:change="create(true)"> 
-                    <label for="no">no</label>
-                    <input type="radio" name="display" id="no" v-on:change="create(false)">
+                    <button @click="create" class="bigbang">{{ created?'destroy':'create' }}</button>
                 </div>
                 <div>
                     <label for="rounded">rounded</label>
@@ -73,10 +68,10 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
                     <input type="range" id="left" v-model="left" min="1" v-bind:max="cols+1" step="1" @change="ubicar">                    
                 </div>
                 
-                <div> 
+                <div v-if="active!='base'"> 
                     <span>back/foward</span>
-                    <button @click="zindex = zindex + 1">more</button>
-                    <button @click="zindex = zindex + 1">less</button>
+                    <button @click="indexz(zindex+1)">more</button>
+                    <button @click="indexz(zindex-1)">less</button>
                 </div>
                 <div>
                     <label for="thckness" >border width</label>
@@ -135,18 +130,28 @@ body{
     display:grid;
     align-items:center;
 }
-
 #elembody{
     display:grid;
     grid-template-rows:repeat(10,1fr);
+    align-items:center;
 }
-
+#element{
+    height:100%;
+    font-size:1.6em;
+    text-align-last: center;
+    -moz-text-align-last: center;
+}
+#base div{overflow: hidden;}
+.bigbang{
+    width:100%;
+}
 </style>
 <script>
     //VUE
     var app = new Vue({
         el: '#app',
         data: {
+            created:false,
             elements:[],
             rows:10,
             cols:10,
@@ -162,31 +167,30 @@ body{
             backgroundcolor:'#000000'
         },
     methods: {
-        create: function(e){
+        create: function(){
             var activ = this.active;
             var base = document.getElementById("base");
             var instancia = document.getElementById(activ);
-            if(e){
                 if(!instancia){
+                    this.created=true;
                   var element = document.createElement("div");
                     element.setAttribute("id",activ);
                     base.appendChild(element); 
                     document.getElementById(this.active).style.backgroundColor=this.backgroundcolor;
+                    
                     this.elements.push({name:this.active,radio:this.radio,up:this.up,
                     down:this.down,right:this.right,left:this.left,zindex:this.zindex,borderwidth:this.borderwidth,
-                    bordercolor:this.bordercolor,backgroundcolor:this.backgroundcolor,rows:this.rows,cols:this.cols});
-                    
+                    bordercolor:this.bordercolor,backgroundcolor:this.backgroundcolor,rows:this.rows,cols:this.cols});  
                 }
-            }else{
                 if(instancia){
                 for(var i=0;i<this.elements.length;i++){
                     if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                        this.created=false;
                         this.elements.splice(i,1);
                     }
                 }    
                 base.removeChild(instancia); 
                 }
-            }   
         },
         innercolor: function(){
             document.getElementById(this.active).style.backgroundColor=this.backgroundcolor;
@@ -195,8 +199,6 @@ body{
             document.getElementById(this.active).style.borderRadius=(this.radio+"%");
         },
         ubicar: function(){
-            console.log(this.up+"/"+this.right);
-            console.log(this.down+"/"+this.left);
             document.getElementById(this.active).style.gridColumn=(this.up+"/"+this.right);
             document.getElementById(this.active).style.gridRow=(this.down+"/"+this.left);
         },
@@ -221,6 +223,12 @@ body{
             let carta=document.getElementById('base');
             carta.style.gridTemplateColumns=`repeat(${this.rows}, 1fr)`;
             carta.style.gridTemplateRows=`repeat(${this.cols}, 1fr)`;
+        },
+        indexz: function(e){
+            if(e>=1){
+                this.zindex=e;
+                document.getElementById(this.active).style.zIndex=this.zindex;  
+            }
         }
     },
     computed:{
