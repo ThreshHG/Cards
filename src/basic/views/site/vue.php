@@ -6,7 +6,6 @@ use yii\helpers\Html;
 use yii\web\View;
 
 $this->title = 'Vue';
-
 $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['position'=>View::POS_HEAD]);
 //$this->registerJsFile("https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js",['position'=>View::POS_HEAD]);
 ?>
@@ -23,6 +22,15 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
                 <button @click="columsandrows([rows,cols+1])">more</button>
                 <button @click="columsandrows([rows,cols-1])"> less </button>
             </div>
+<!-- Borrar -->
+            <div id="borramepto">
+                Example font for test, use only one font for template.
+            </div>
+            <label for="font">fonts</label>
+            <select v-model="selectedfont" @change="fuentes" id="font">
+                <option v-for="font in fonts" :value="font">{{font}}</option>
+            </select>
+<!-- Hasta aca -->
         </div>
         <div id="card">
             <div id="base">
@@ -46,6 +54,13 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
                 </div>
                 <div>
                     <label for="rounded">rounded</label>
+                    <div >
+                        <button @click="activecorner('topleft')">┌</button>
+                        <button @click="activecorner('topright')">┐</button>
+                        <button @click="activecorner('all')">■</button>
+                        <button @click="activecorner('bottomright')">└</button>
+                        <button @click="activecorner('bottomleft')">┘</button>
+                    </div>
                     <input type="range" id="rounded" v-model="radio" min="0" max="50" step="1" v-on:change="rounded">
                 </div>
                 
@@ -77,14 +92,24 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
                     <label for="thckness" >border width</label>
                     <input type="range" id="thickness" v-model="borderwidth" min="0" max="10" step="1" @change="borde">
                 </div>
-                
-                <div>
-                    <label for="bordercolor">border color</label>
-                    <input type="color" id="bordercolor" v-model="bordercolor" @change="borde">
+                <div v-if="active!='base' && active!='image'">
+                    <label for="fontsise">font size</label>
+                    <input type="range" id="fontsise" v-model="fontsize" min="5" max="30" step="1" @change="estilofuentes">
                 </div>
                 <div>
-                    <label for="innercolor">element color</label>
+                     <span>colors</span>
+                    <label for="bordercolor">border</label>
+                    <input type="color" id="bordercolor" v-model="bordercolor" @change="borde">
+                    <label for="innercolor">element</label>
                     <input type="color" id="innercolor" v-model="backgroundcolor" @change="innercolor">
+                    <div v-if="active!='base' && active!='image'">
+                        <label for="fuentecolor">font</label>
+                        <input type="color" id="fuentecolor" v-model="fontcolor" @change="estilofuentes">
+                    </div>
+                </div>
+                <div v-if="active!='base' && active!='image'">
+                    <label for="centertext"> center text? </label>
+                    <button @click="aligned" id="centertext">left</button>
                 </div>
             </div>
         </div>
@@ -132,7 +157,7 @@ body{
 }
 #elembody{
     display:grid;
-    grid-template-rows:repeat(10,1fr);
+    grid-template-rows:repeat(11,1fr);
     align-items:center;
 }
 #element{
@@ -145,14 +170,23 @@ body{
 .bigbang{
     width:100%;
 }
+.elementor{
+    display:grid;
+    align-items:center;
+}
 </style>
 <script>
     //VUE
     var app = new Vue({
         el: '#app',
         data: {
+            selectedfont:"Liberation Sans",
+            fonts:["Liberation Sans","aakar,medium","Abyssinica SIL","Ani","AnjaliOldLipi","Bitstream Charter","Bitstream Vera Sans","Chandas","Chilanka","DejaVu Sans","DejaVu Serif","Dyuthi","FreeMono","FreeSans","FreeSerif","Gargi","Garuda","Jamrul","Kalimati","Karumbi","Keraleeyam","Khmer OS","Laksaman","Liberation Mono","Liberation Serif","Likhan","Loma","Manjari","Meera","Mitra Mono","Mukti Narrow","Nakula","Norasi","Noto Mono","Padauk","Pagul","Purisa","Samanata","Sarai","Sawasdee","Tlwg Mono","Ubuntu","Umpush","Uroob, Bold","Waree"],
+            corner:"all",
             created:false,
-            elements:[],
+            elements:[{name:"background",borderwidth:0,bordercolor:'#000000',
+                backgroundcolor:'#000000',radiotl:0,radiotr:0,
+                radiobl:0,radiobr:0}],
             rows:10,
             cols:10,
             active:"base",
@@ -164,46 +198,98 @@ body{
             zindex:1,
             borderwidth:0,
             bordercolor:'#000000',
-            backgroundcolor:'#000000'
+            backgroundcolor:'#000000',
+            fontsize:10,
+            fontcolor:'#000000',
+            textalign:"left"
         },
     methods: {
         create: function(){
-            var activ = this.active;
             var base = document.getElementById("base");
-            var instancia = document.getElementById(activ);
+            var instancia = document.getElementById(this.active);
                 if(!instancia){
                     this.created=true;
-                  var element = document.createElement("div");
-                    element.setAttribute("id",activ);
+                    var element = document.createElement("div");
+                    element.setAttribute("id",this.active);
+                    element.setAttribute("class","elementor");
                     base.appendChild(element); 
-                    document.getElementById(this.active).style.backgroundColor=this.backgroundcolor;
-                    
-                    this.elements.push({name:this.active,radio:this.radio,up:this.up,
-                    down:this.down,right:this.right,left:this.left,zindex:this.zindex,borderwidth:this.borderwidth,
-                    bordercolor:this.bordercolor,backgroundcolor:this.backgroundcolor,rows:this.rows,cols:this.cols});  
+                    document.getElementById(this.active).style.backgroundColor=this.backgroundcolor; 
+                }else{
+                base.removeChild(instancia);
+                this.created=false;
                 }
-                if(instancia){
-                for(var i=0;i<this.elements.length;i++){
-                    if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                        this.created=false;
-                        this.elements.splice(i,1);
-                    }
-                }    
-                base.removeChild(instancia); 
-                }
+            this.update();
         },
         innercolor: function(){
             document.getElementById(this.active).style.backgroundColor=this.backgroundcolor;
+            for(var i=0;i<this.elements.length;i++){
+                if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                    this.elements[i].backgroundcolor=this.backgroundcolor;
+                }
+            }
         },
         rounded: function(){
-            document.getElementById(this.active).style.borderRadius=(this.radio+"%");
+            switch(this.corner){
+                case "all":
+                    document.getElementById(this.active).style.borderRadius=(this.radio+"%");
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements[i].radiotl=this.radio;
+                            this.elements[i].radiobl=this.radio;
+                            this.elements[i].radiotr=this.radio;
+                            this.elements[i].radiobr=this.radio;
+                        }
+                    }
+                break;
+                case "topleft":
+                    document.getElementById(this.active).style.borderTopLeftRadius=(this.radio+"%");
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements[i].radiotl=this.radio;
+                        }
+                    }
+                break;
+                case "topright":
+                    document.getElementById(this.active).style.borderTopRightRadius=(this.radio+"%");
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements[i].radiotr=this.radio;
+                        }
+                    }
+                break;
+                case "bottomleft":
+                    document.getElementById(this.active).style.borderBottomRightRadius=(this.radio+"%");
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements[i].radiobr=this.radio;
+                        }
+                    }
+                break;
+                case "bottomright":
+                    document.getElementById(this.active).style.borderBottomLeftRadius=(this.radio+"%");
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements[i].radiobl=this.radio;
+                        }
+                    }
+                break;
+            }
+            
         },
         ubicar: function(){
             document.getElementById(this.active).style.gridColumn=(this.up+"/"+this.right);
             document.getElementById(this.active).style.gridRow=(this.down+"/"+this.left);
+            for(var i=0;i<this.elements.length;i++){
+                    if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                        this.elements[i].up=this.up;
+                        this.elements[i].down=this.down;
+                        this.elements[i].left=this.left;
+                        this.elements[i].right=this.right;
+                    }
+            }
+
         },
         unselect: function(){
-            document.querySelectorAll('[name=display]').forEach((x)=> x.checked=false);
             this.radio=0,
             this.up=1,
             this.down=1,
@@ -212,10 +298,22 @@ body{
             this.zindex=1,
             this.borderwidth=0,
             this.bordercolor='#000000',
-            this.backgroundcolor='#000000'
+            this.backgroundcolor='#000000',
+            this.corner="all"
+            if(document.getElementById(this.active)!=null){
+                this.created=true;
+            }else{
+                this.created=false;
+            }
         },
         borde: function(){
             document.getElementById(this.active).style.border=(this.bordercolor+" "+this.borderwidth+"px solid");
+            for(var i=0;i<this.elements.length;i++){
+                            if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                                this.elements[i].bordercolor=this.bordercolor;
+                                this.elements[i].borderwidth=this.borderwidth;
+                            }
+            }
         },
         columsandrows: function(e){
             this.rows=e[0];
@@ -228,11 +326,74 @@ body{
             if(e>=1){
                 this.zindex=e;
                 document.getElementById(this.active).style.zIndex=this.zindex;  
+                for(var i=0;i<this.elements.length;i++){
+                    if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                        this.elements[i].zindex=this.zindex;
+                    }
+                }
+            }
+        },
+        activecorner: function(a){
+            this.corner=a;
+        },
+        update: function(){
+            var instancia = document.getElementById(this.active);
+            if(instancia){
+                    this.elements.push({name:this.active,textalign:this.textalign,fontsize:this.fontsize,
+                    fontcolor:this.fontcolor,up:this.up,down:this.down,right:this.right,left:this.left,
+                    zindex:this.zindex,borderwidth:this.borderwidth, bordercolor:this.bordercolor,
+                    backgroundcolor:this.backgroundcolor,radiotl:this.radio,radiotr:this.radio,
+                    radiobl:this.radio,radiobr:this.radio});  
+                }
+                if(!instancia){
+                    for(var i=0;i<this.elements.length;i++){
+                        if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                            this.elements.splice(i,1);
+                        }
+                    }    
+                }
+        },
+        fuentes: function(){
+            var texto=document.getElementById("borramepto");
+            texto.style.fontFamily =this.selectedfont;
+            document.getElementById("base").style.fontFamily =this.selectedfont;
+        },
+        estilofuentes: function(){
+            if(this.active!="base" && this.active!="image"){
+                if(this.active=="damage" || this.active=="health" || this.active=="cost"){
+                    document.getElementById(this.active).innerHTML="10";
+                }else{
+                  document.getElementById(this.active).innerHTML="Example text";   
+                }
+            } 
+            var texto=document.getElementById(this.active);
+            texto.style.fontSize=(this.fontsize/10)+"em";
+            texto.style.color=this.fontcolor;
+            for(var i=0;i<this.elements.length;i++){
+                    if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                        this.elements[i].fontsize=this.fontsize;
+                        this.elements[i].fontcolor=this.fontcolor;
+                    }
+            }
+        },
+        aligned: function(){
+            if(this.textalign=="left"){
+                this.textalign="center"
+                document.getElementById("centertext").innerHTML="center";
+            }else if(this.textalign=="center"){
+                this.textalign="right"
+                document.getElementById("centertext").innerHTML="right";
+            }else if(this.textalign=="right"){
+                this.textalign="left"
+                document.getElementById("centertext").innerHTML="left";
+            }
+            document.getElementById(this.active).style.textAlign=this.textalign;
+            for(var i=0;i<this.elements.length;i++){
+                if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
+                    this.elements[i].textalign=this.textalign;
+                }
             }
         }
-    },
-    computed:{
-        
     },
     mounted(){
         let carta=document.getElementById('base');
