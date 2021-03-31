@@ -17,7 +17,8 @@ class TemplateSearch extends Template
     public function rules()
     {
         return [
-            [['id', 'name_id', 'cost_id', 'health_id', 'atk_id', 'description', 'type', 'faccion'], 'integer'],
+            [['id', 'name_id', 'cost_id', 'health_id', 'atk_id', 'description_id', 'type_id', 'background_id', 'columns', 'rows'], 'integer'],
+            [['font'], 'safe'],
         ];
     }
 
@@ -62,10 +63,14 @@ class TemplateSearch extends Template
             'cost_id' => $this->cost_id,
             'health_id' => $this->health_id,
             'atk_id' => $this->atk_id,
-            'description' => $this->description,
-            'type' => $this->type,
-            'faccion' => $this->faccion,
+            'description_id' => $this->description_id,
+            'type_id' => $this->type_id,
+            'background_id' => $this->background_id,
+            'columns' => $this->columns,
+            'rows' => $this->rows,
         ]);
+
+        $query->andFilterWhere(['like', 'font', $this->font]);
 
         return $dataProvider;
     }

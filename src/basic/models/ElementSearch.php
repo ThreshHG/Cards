@@ -17,8 +17,8 @@ class ElementSearch extends Element
     public function rules()
     {
         return [
-            [['id', 'axisx1', 'axisy1', 'axisx2', 'axisy2', 'axisz', 'borderwidth', 'gridrows', 'gridcolumns', 'radiolt', 'radiort', 'radiolb', 'radiorb'], 'integer'],
-            [['name', 'bordercolor', 'innercolor', 'image'], 'safe'],
+            [['id', 'axisx1', 'axisy1', 'axisx2', 'axisy2', 'axisz', 'borderwidth', 'radiolt', 'radiort', 'radiolb', 'radiorb', 'fontsize'], 'integer'],
+            [['name', 'bordercolor', 'innercolor', 'fontcolor', 'image', 'textalign'], 'safe'],
         ];
     }
 
@@ -65,18 +65,19 @@ class ElementSearch extends Element
             'axisy2' => $this->axisy2,
             'axisz' => $this->axisz,
             'borderwidth' => $this->borderwidth,
-            'gridrows' => $this->gridrows,
-            'gridcolumns' => $this->gridcolumns,
             'radiolt' => $this->radiolt,
             'radiort' => $this->radiort,
             'radiolb' => $this->radiolb,
             'radiorb' => $this->radiorb,
+            'fontsize' => $this->fontsize,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'bordercolor', $this->bordercolor])
             ->andFilterWhere(['like', 'innercolor', $this->innercolor])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'fontcolor', $this->fontcolor])
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'textalign', $this->textalign]);
 
         return $dataProvider;
     }

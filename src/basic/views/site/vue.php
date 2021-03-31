@@ -30,6 +30,8 @@ $this->registerJsFile("https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js",['positio
             <select v-model="selectedfont" @change="fuentes" id="font">
                 <option v-for="font in fonts" :value="font">{{font}}</option>
             </select>
+            <button @click="submitted">submit</button>
+            <button @click="getteding">get</button>
 <!-- Hasta aca -->
         </div>
         <div id="card">
@@ -184,9 +186,9 @@ body{
             fonts:["Liberation Sans","aakar,medium","Abyssinica SIL","Ani","AnjaliOldLipi","Bitstream Charter","Bitstream Vera Sans","Chandas","Chilanka","DejaVu Sans","DejaVu Serif","Dyuthi","FreeMono","FreeSans","FreeSerif","Gargi","Garuda","Jamrul","Kalimati","Karumbi","Keraleeyam","Khmer OS","Laksaman","Liberation Mono","Liberation Serif","Likhan","Loma","Manjari","Meera","Mitra Mono","Mukti Narrow","Nakula","Norasi","Noto Mono","Padauk","Pagul","Purisa","Samanata","Sarai","Sawasdee","Tlwg Mono","Ubuntu","Umpush","Uroob, Bold","Waree"],
             corner:"all",
             created:false,
-            elements:[{name:"background",borderwidth:0,bordercolor:'#000000',
-                backgroundcolor:'#000000',radiotl:0,radiotr:0,
-                radiobl:0,radiobr:0}],
+            elements:[{name:"base",borderwidth:0,bordercolor:'#000000',
+                innercolor:'#f08080',radiolt:0,radiort:0,
+                radiolb:0,radiorb:0}],
             rows:10,
             cols:10,
             active:"base",
@@ -224,7 +226,7 @@ body{
             document.getElementById(this.active).style.backgroundColor=this.backgroundcolor;
             for(var i=0;i<this.elements.length;i++){
                 if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                    this.elements[i].backgroundcolor=this.backgroundcolor;
+                    this.elements[i].innercolor=this.backgroundcolor;
                 }
             }
         },
@@ -234,10 +236,10 @@ body{
                     document.getElementById(this.active).style.borderRadius=(this.radio+"%");
                     for(var i=0;i<this.elements.length;i++){
                         if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                            this.elements[i].radiotl=this.radio;
-                            this.elements[i].radiobl=this.radio;
-                            this.elements[i].radiotr=this.radio;
-                            this.elements[i].radiobr=this.radio;
+                            this.elements[i].radiolt=this.radio;
+                            this.elements[i].radiolb=this.radio;
+                            this.elements[i].radiort=this.radio;
+                            this.elements[i].radiorb=this.radio;
                         }
                     }
                 break;
@@ -245,7 +247,7 @@ body{
                     document.getElementById(this.active).style.borderTopLeftRadius=(this.radio+"%");
                     for(var i=0;i<this.elements.length;i++){
                         if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                            this.elements[i].radiotl=this.radio;
+                            this.elements[i].radiolt=this.radio;
                         }
                     }
                 break;
@@ -253,7 +255,7 @@ body{
                     document.getElementById(this.active).style.borderTopRightRadius=(this.radio+"%");
                     for(var i=0;i<this.elements.length;i++){
                         if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                            this.elements[i].radiotr=this.radio;
+                            this.elements[i].radiort=this.radio;
                         }
                     }
                 break;
@@ -261,7 +263,7 @@ body{
                     document.getElementById(this.active).style.borderBottomRightRadius=(this.radio+"%");
                     for(var i=0;i<this.elements.length;i++){
                         if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                            this.elements[i].radiobr=this.radio;
+                            this.elements[i].radiorb=this.radio;
                         }
                     }
                 break;
@@ -269,7 +271,7 @@ body{
                     document.getElementById(this.active).style.borderBottomLeftRadius=(this.radio+"%");
                     for(var i=0;i<this.elements.length;i++){
                         if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                            this.elements[i].radiobl=this.radio;
+                            this.elements[i].radiolb=this.radio;
                         }
                     }
                 break;
@@ -281,10 +283,10 @@ body{
             document.getElementById(this.active).style.gridRow=(this.down+"/"+this.left);
             for(var i=0;i<this.elements.length;i++){
                     if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                        this.elements[i].up=this.up;
-                        this.elements[i].down=this.down;
-                        this.elements[i].left=this.left;
-                        this.elements[i].right=this.right;
+                        this.elements[i].axisx1=this.up;
+                        this.elements[i].axisx2=this.down;
+                        this.elements[i].axisy1=this.left;
+                        this.elements[i].axisy2=this.right;
                     }
             }
 
@@ -328,7 +330,7 @@ body{
                 document.getElementById(this.active).style.zIndex=this.zindex;  
                 for(var i=0;i<this.elements.length;i++){
                     if(this.elements[i]==this.elements.find(t=>t.name == this.active)){
-                        this.elements[i].zindex=this.zindex;
+                        this.elements[i].axisz=this.zindex;
                     }
                 }
             }
@@ -339,11 +341,11 @@ body{
         update: function(){
             var instancia = document.getElementById(this.active);
             if(instancia){
-                    this.elements.push({name:this.active,textalign:this.textalign,fontsize:this.fontsize,
-                    fontcolor:this.fontcolor,up:this.up,down:this.down,right:this.right,left:this.left,
-                    zindex:this.zindex,borderwidth:this.borderwidth, bordercolor:this.bordercolor,
-                    backgroundcolor:this.backgroundcolor,radiotl:this.radio,radiotr:this.radio,
-                    radiobl:this.radio,radiobr:this.radio});  
+                    this.elements.push({name:this.active,axisx1:this.up,axisx2:this.down,axisy1:this.right,
+                    axisy2:this.left,axisz:this.zindex,borderwidth:this.borderwidth,bordercolor:this.bordercolor,
+                    innercolor:this.backgroundcolor,radiolt:this.radio,radiort:this.radio,
+                    radiolb:this.radio,radiorb:this.radio,fontcolor:this.fontcolor,fontsize:this.fontsize,
+                    textalign:this.textalign});  
                 }
                 if(!instancia){
                     for(var i=0;i<this.elements.length;i++){
@@ -393,6 +395,52 @@ body{
                     this.elements[i].textalign=this.textalign;
                 }
             }
+        },
+        submitted: function(){
+            for(let i=0;i<this.elements.length;i++){
+                fetch("/apiv1/elements",{
+                    method:"POST",
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(this.elements[i])
+                    })
+                    .then((response) => {
+                        if (response.ok) {
+                            console.log("registered successfully!");
+                            return response.json();
+                        } else {
+                            throw new Error('Something went wrong');
+                           }
+                    })
+                    .catch((error) => {
+                        console.log("failed to register :(");
+                        console.log(error);
+                    });
+            }
+        },
+        getteding:function(){
+            
+            fetch("/apiv1/elements\?fields\=id",{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json'
+            }
+            }).then(function(resp){
+                return resp.json();
+            }).then(function(datos){
+                console.log(datos);
+            })/* no anda
+            fetch("/apiv1/elements\?id\=7",{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json'
+            }
+            }).then(function(resp){
+                return resp.json();
+            }).then(function(datos){
+                console.log(datos);
+            })*/
         }
     },
     mounted(){
@@ -420,7 +468,7 @@ body{
 
 
 
-
+        /*
         fetch("/apiv1/elements",{
             method:"GET",
             headers:{
@@ -432,6 +480,7 @@ body{
             //app.message=datos;
             console.log(datos);
         })
+        */
         /*
         axios.get('/apiv1/users')
         .then(function (response) {

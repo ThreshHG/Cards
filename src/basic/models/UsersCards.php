@@ -7,9 +7,9 @@ use Yii;
 /**
  * This is the model class for table "users_cards".
  *
- * @property int $id
  * @property int|null $users_id
  * @property int|null $cards_id
+ * @property int $id
  * @property string|null $name
  *
  * @property Cards $cards
@@ -44,9 +44,9 @@ class UsersCards extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'users_id' => 'Users ID',
             'cards_id' => 'Cards ID',
+            'id' => 'ID',
             'name' => 'Name',
         ];
     }

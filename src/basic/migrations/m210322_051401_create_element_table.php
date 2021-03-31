@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%element}}`.
  */
-class m210223_194506_create_element_table extends Migration
+class m210322_051401_create_element_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -23,13 +23,14 @@ class m210223_194506_create_element_table extends Migration
             'borderwidth' => $this->integer(),
             'bordercolor' => $this->string(),
             'innercolor' => $this->string(),
-            'gridrows' => $this->integer(),
-            'gridcolumns' => $this->integer(),
             'radiolt' => $this->integer(),
             'radiort' => $this->integer(),
             'radiolb' => $this->integer(),
             'radiorb' => $this->integer(),
+            'fontcolor' => $this->string(),
+            'fontsize' => $this->integer(),
             'image' => 'longblob',
+            'textalign' => $this->string(),
         ]);
     }
 

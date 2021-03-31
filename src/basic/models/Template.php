@@ -12,18 +12,21 @@ use Yii;
  * @property int|null $cost_id
  * @property int|null $health_id
  * @property int|null $atk_id
- * @property int|null $description
- * @property int|null $type
- * @property int|null $faccion
+ * @property int|null $description_id
+ * @property int|null $type_id
+ * @property string|null $font
+ * @property int|null $background_id
+ * @property int|null $columns
+ * @property int|null $rows
  *
  * @property Cards[] $cards
  * @property Element $atk
+ * @property Element $background
  * @property Element $cost
- * @property Element $description0
- * @property Element $faccion0
+ * @property Element $description
  * @property Element $health
  * @property Element $name
- * @property Element $type0
+ * @property Element $type
  */
 class Template extends \yii\db\ActiveRecord
 {
@@ -41,14 +44,15 @@ class Template extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name_id', 'cost_id', 'health_id', 'atk_id', 'description', 'type', 'faccion'], 'integer'],
+            [['name_id', 'cost_id', 'health_id', 'atk_id', 'description_id', 'type_id', 'background_id', 'columns', 'rows'], 'integer'],
+            [['font'], 'string', 'max' => 255],
             [['atk_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['atk_id' => 'id']],
+            [['background_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['background_id' => 'id']],
             [['cost_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['cost_id' => 'id']],
-            [['description'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['description' => 'id']],
-            [['faccion'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['faccion' => 'id']],
+            [['description_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['description_id' => 'id']],
             [['health_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['health_id' => 'id']],
             [['name_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['name_id' => 'id']],
-            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['type' => 'id']],
+            [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => Element::className(), 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
 
@@ -63,9 +67,12 @@ class Template extends \yii\db\ActiveRecord
             'cost_id' => 'Cost ID',
             'health_id' => 'Health ID',
             'atk_id' => 'Atk ID',
-            'description' => 'Description',
-            'type' => 'Type',
-            'faccion' => 'Faccion',
+            'description_id' => 'Description ID',
+            'type_id' => 'Type ID',
+            'font' => 'Font',
+            'background_id' => 'Background ID',
+            'columns' => 'Columns',
+            'rows' => 'Rows',
         ];
     }
 
@@ -90,6 +97,16 @@ class Template extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Background]].
+     *
+     * @return \yii\db\ActiveQuery|ElementQuery
+     */
+    public function getBackground()
+    {
+        return $this->hasOne(Element::className(), ['id' => 'background_id']);
+    }
+
+    /**
      * Gets query for [[Cost]].
      *
      * @return \yii\db\ActiveQuery|ElementQuery
@@ -100,23 +117,13 @@ class Template extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Description0]].
+     * Gets query for [[Description]].
      *
      * @return \yii\db\ActiveQuery|ElementQuery
      */
-    public function getDescription0()
+    public function getDescription()
     {
-        return $this->hasOne(Element::className(), ['id' => 'description']);
-    }
-
-    /**
-     * Gets query for [[Faccion0]].
-     *
-     * @return \yii\db\ActiveQuery|ElementQuery
-     */
-    public function getFaccion0()
-    {
-        return $this->hasOne(Element::className(), ['id' => 'faccion']);
+        return $this->hasOne(Element::className(), ['id' => 'description_id']);
     }
 
     /**
@@ -140,13 +147,13 @@ class Template extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Type0]].
+     * Gets query for [[Type]].
      *
      * @return \yii\db\ActiveQuery|ElementQuery
      */
-    public function getType0()
+    public function getType()
     {
-        return $this->hasOne(Element::className(), ['id' => 'type']);
+        return $this->hasOne(Element::className(), ['id' => 'type_id']);
     }
 
     /**

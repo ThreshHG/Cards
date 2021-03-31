@@ -35,10 +35,6 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'innercolor') ?>
 
-    <?php // echo $form->field($model, 'gridrows') ?>
-
-    <?php // echo $form->field($model, 'gridcolumns') ?>
-
     <?php // echo $form->field($model, 'radiolt') ?>
 
     <?php // echo $form->field($model, 'radiort') ?>
@@ -47,7 +43,13 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'radiorb') ?>
 
+    <?php // echo $form->field($model, 'fontcolor') ?>
+
+    <?php // echo $form->field($model, 'fontsize') ?>
+
     <?php // echo $form->field($model, 'image') ?>
+
+    <?php // echo $form->field($model, 'textalign') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

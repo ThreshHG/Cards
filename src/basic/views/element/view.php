@@ -39,13 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'borderwidth',
             'bordercolor',
             'innercolor',
-            'gridrows',
-            'gridcolumns',
             'radiolt',
             'radiort',
             'radiolb',
             'radiorb',
+            'fontcolor',
+            'fontsize',
             'image',
+            'textalign',
         ],
     ]) ?>
 

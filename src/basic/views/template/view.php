@@ -34,9 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'cost_id',
             'health_id',
             'atk_id',
-            'description',
-            'type',
-            'faccion',
+            'description_id',
+            'type_id',
+            'font',
+            'background_id',
+            'columns',
+            'rows',
         ],
     ]) ?>
 

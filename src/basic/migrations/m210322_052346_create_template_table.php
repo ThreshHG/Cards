@@ -14,7 +14,7 @@ use yii\db\Migration;
  * - `{{%element}}`
  * - `{{%element}}`
  */
-class m210223_195418_create_template_table extends Migration
+class m210322_052346_create_template_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -27,9 +27,12 @@ class m210223_195418_create_template_table extends Migration
             'cost_id' => $this->integer(),
             'health_id' => $this->integer(),
             'atk_id' => $this->integer(),
-            'description' => $this->integer(),
-            'type' => $this->integer(),
-            'faccion' => $this->integer(),
+            'description_id' => $this->integer(),
+            'type_id' => $this->integer(),
+            'font' => $this->string(),
+            'background_id' => $this->integer(),
+            'columns' => $this->integer(),
+            'rows' => $this->integer(),
         ]);
 
         // creates index for column `name_id`
@@ -100,52 +103,52 @@ class m210223_195418_create_template_table extends Migration
             'CASCADE'
         );
 
-        // creates index for column `description`
+        // creates index for column `description_id`
         $this->createIndex(
-            '{{%idx-template-description}}',
+            '{{%idx-template-description_id}}',
             '{{%template}}',
-            'description'
+            'description_id'
         );
 
         // add foreign key for table `{{%element}}`
         $this->addForeignKey(
-            '{{%fk-template-description}}',
+            '{{%fk-template-description_id}}',
             '{{%template}}',
-            'description',
+            'description_id',
             '{{%element}}',
             'id',
             'CASCADE'
         );
 
-        // creates index for column `type`
+        // creates index for column `type_id`
         $this->createIndex(
-            '{{%idx-template-type}}',
+            '{{%idx-template-type_id}}',
             '{{%template}}',
-            'type'
+            'type_id'
         );
 
         // add foreign key for table `{{%element}}`
         $this->addForeignKey(
-            '{{%fk-template-type}}',
+            '{{%fk-template-type_id}}',
             '{{%template}}',
-            'type',
+            'type_id',
             '{{%element}}',
             'id',
             'CASCADE'
         );
 
-        // creates index for column `faccion`
+        // creates index for column `background_id`
         $this->createIndex(
-            '{{%idx-template-faccion}}',
+            '{{%idx-template-background_id}}',
             '{{%template}}',
-            'faccion'
+            'background_id'
         );
 
         // add foreign key for table `{{%element}}`
         $this->addForeignKey(
-            '{{%fk-template-faccion}}',
+            '{{%fk-template-background_id}}',
             '{{%template}}',
-            'faccion',
+            'background_id',
             '{{%element}}',
             'id',
             'CASCADE'
@@ -207,37 +210,37 @@ class m210223_195418_create_template_table extends Migration
 
         // drops foreign key for table `{{%element}}`
         $this->dropForeignKey(
-            '{{%fk-template-description}}',
+            '{{%fk-template-description_id}}',
             '{{%template}}'
         );
 
-        // drops index for column `description`
+        // drops index for column `description_id`
         $this->dropIndex(
-            '{{%idx-template-description}}',
+            '{{%idx-template-description_id}}',
             '{{%template}}'
         );
 
         // drops foreign key for table `{{%element}}`
         $this->dropForeignKey(
-            '{{%fk-template-type}}',
+            '{{%fk-template-type_id}}',
             '{{%template}}'
         );
 
-        // drops index for column `type`
+        // drops index for column `type_id`
         $this->dropIndex(
-            '{{%idx-template-type}}',
+            '{{%idx-template-type_id}}',
             '{{%template}}'
         );
 
         // drops foreign key for table `{{%element}}`
         $this->dropForeignKey(
-            '{{%fk-template-faccion}}',
+            '{{%fk-template-background_id}}',
             '{{%template}}'
         );
 
-        // drops index for column `faccion`
+        // drops index for column `background_id`
         $this->dropIndex(
-            '{{%idx-template-faccion}}',
+            '{{%idx-template-background_id}}',
             '{{%template}}'
         );
 

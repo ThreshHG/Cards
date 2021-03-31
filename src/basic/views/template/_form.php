@@ -20,11 +20,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'atk_id')->textInput() ?>
 
-    <?= $form->field($model, 'description')->textInput() ?>
+    <?= $form->field($model, 'description_id')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'type_id')->textInput() ?>
 
-    <?= $form->field($model, 'faccion')->textInput() ?>
+    <?= $form->field($model, 'font')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'background_id')->textInput() ?>
+
+    <?= $form->field($model, 'columns')->textInput() ?>
+
+    <?= $form->field($model, 'rows')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

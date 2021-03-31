@@ -30,10 +30,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'innercolor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'gridrows')->textInput() ?>
-
-    <?= $form->field($model, 'gridcolumns')->textInput() ?>
-
     <?= $form->field($model, 'radiolt')->textInput() ?>
 
     <?= $form->field($model, 'radiort')->textInput() ?>
@@ -42,7 +38,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'radiorb')->textInput() ?>
 
+    <?= $form->field($model, 'fontcolor')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'fontsize')->textInput() ?>
+
     <?= $form->field($model, 'image')->textInput() ?>
+
+    <?= $form->field($model, 'textalign')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

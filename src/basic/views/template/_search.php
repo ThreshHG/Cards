@@ -25,11 +25,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'atk_id') ?>
 
-    <?php // echo $form->field($model, 'description') ?>
+    <?php // echo $form->field($model, 'description_id') ?>
 
-    <?php // echo $form->field($model, 'type') ?>
+    <?php // echo $form->field($model, 'type_id') ?>
 
-    <?php // echo $form->field($model, 'faccion') ?>
+    <?php // echo $form->field($model, 'font') ?>
+
+    <?php // echo $form->field($model, 'background_id') ?>
+
+    <?php // echo $form->field($model, 'columns') ?>
+
+    <?php // echo $form->field($model, 'rows') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

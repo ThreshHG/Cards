@@ -17,13 +17,14 @@ use Yii;
  * @property int|null $borderwidth
  * @property string|null $bordercolor
  * @property string|null $innercolor
- * @property int|null $gridrows
- * @property int|null $gridcolumns
  * @property int|null $radiolt
  * @property int|null $radiort
  * @property int|null $radiolb
  * @property int|null $radiorb
+ * @property string|null $fontcolor
+ * @property int|null $fontsize
  * @property resource|null $image
+ * @property string|null $textalign
  *
  * @property Template[] $templates
  * @property Template[] $templates0
@@ -49,9 +50,9 @@ class Element extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['axisx1', 'axisy1', 'axisx2', 'axisy2', 'axisz', 'borderwidth', 'gridrows', 'gridcolumns', 'radiolt', 'radiort', 'radiolb', 'radiorb'], 'integer'],
+            [['axisx1', 'axisy1', 'axisx2', 'axisy2', 'axisz', 'borderwidth', 'radiolt', 'radiort', 'radiolb', 'radiorb', 'fontsize'], 'integer'],
             [['image'], 'string'],
-            [['name', 'bordercolor', 'innercolor'], 'string', 'max' => 255],
+            [['name', 'bordercolor', 'innercolor', 'fontcolor', 'textalign'], 'string', 'max' => 255],
         ];
     }
 
@@ -71,13 +72,14 @@ class Element extends \yii\db\ActiveRecord
             'borderwidth' => 'Borderwidth',
             'bordercolor' => 'Bordercolor',
             'innercolor' => 'Innercolor',
-            'gridrows' => 'Gridrows',
-            'gridcolumns' => 'Gridcolumns',
             'radiolt' => 'Radiolt',
             'radiort' => 'Radiort',
             'radiolb' => 'Radiolb',
             'radiorb' => 'Radiorb',
+            'fontcolor' => 'Fontcolor',
+            'fontsize' => 'Fontsize',
             'image' => 'Image',
+            'textalign' => 'Textalign',
         ];
     }
 
@@ -98,7 +100,7 @@ class Element extends \yii\db\ActiveRecord
      */
     public function getTemplates0()
     {
-        return $this->hasMany(Template::className(), ['cost_id' => 'id']);
+        return $this->hasMany(Template::className(), ['background_id' => 'id']);
     }
 
     /**
@@ -108,7 +110,7 @@ class Element extends \yii\db\ActiveRecord
      */
     public function getTemplates1()
     {
-        return $this->hasMany(Template::className(), ['description' => 'id']);
+        return $this->hasMany(Template::className(), ['cost_id' => 'id']);
     }
 
     /**
@@ -118,7 +120,7 @@ class Element extends \yii\db\ActiveRecord
      */
     public function getTemplates2()
     {
-        return $this->hasMany(Template::className(), ['faccion' => 'id']);
+        return $this->hasMany(Template::className(), ['description_id' => 'id']);
     }
 
     /**
@@ -148,7 +150,7 @@ class Element extends \yii\db\ActiveRecord
      */
     public function getTemplates5()
     {
-        return $this->hasMany(Template::className(), ['type' => 'id']);
+        return $this->hasMany(Template::className(), ['type_id' => 'id']);
     }
 
     /**

@@ -8,7 +8,7 @@ use yii\db\Migration;
  *
  * - `{{%template}}`
  */
-class m210223_195632_create_cards_table extends Migration
+class m210322_052417_create_cards_table extends Migration
 {
     /**
      * {@inheritdoc}

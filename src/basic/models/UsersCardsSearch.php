@@ -17,7 +17,7 @@ class UsersCardsSearch extends UsersCards
     public function rules()
     {
         return [
-            [['id', 'users_id', 'cards_id'], 'integer'],
+            [['users_id', 'cards_id', 'id'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -58,9 +58,9 @@ class UsersCardsSearch extends UsersCards
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'users_id' => $this->users_id,
             'cards_id' => $this->cards_id,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
