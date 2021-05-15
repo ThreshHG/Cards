@@ -4,8 +4,8 @@ services:
   db:
     image: mysql:5.7.27
     environment:
-      MYSQL_DATABASE: thresh
-      MYSQL_ROOT_PASSWORD: Greytree6
+      MYSQL_DATABASE: change
+      MYSQL_ROOT_PASSWORD: changethis
     ports:
       - 4000:3306
     volumes:
@@ -15,7 +15,7 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: db
-      PMA_PASSWORD: Greytree6
+      PMA_PASSWORD: changethis
       PMA_USER: root
       PMA_PORT: 3306
     ports:
@@ -27,8 +27,8 @@ services:
       - ./src/composer/cache:/root/.composer/cache:delegated
       - ./src/basic:/app:delegated
     environment:
-      DB_DATABASE: thresh
-      DB_PASSWORD:  Greytree6
+      DB_DATABASE: change
+      DB_PASSWORD:  changethis
       DB_HOST: db
       PHP_USER_ID: 1000
       PRODUCCION: 1

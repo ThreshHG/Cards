@@ -1,0 +1,7 @@
+instruccions: 
+-copy docker-compose.dist.yml and paste it withought the .dist 
+-to that new file, change the database and password values
+-open the terminal go the the project folder and write "docker-compose up" (you need to have docker installed and may require super user permission)
+-in another terminal go to the bin folder and run firs_start.sh
+-then run yii.sh and type migrate ("./yii.sh migrate")
+the main view is at /site/vue (http://localhost:8000/site/vue)
